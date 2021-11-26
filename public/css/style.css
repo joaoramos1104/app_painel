@@ -1,0 +1,107 @@
+/* /*index*/
+		
+        body {
+			background: linear-gradient(to bottom,
+    		rgba(255, 255, 255, 0.91) 0%, rgb(249 239 242 / 76%) 100%), url(/img/bg.png);
+			background-position: center;
+			background-size: cover;
+		}
+
+		body::after{
+			content: '';
+			position: fixed;
+			bottom: 0;
+			width: 100%;
+			height: 100%;
+			background-image: url(/img/svg/15.svg);
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-position: bottom;
+			z-index: -1;
+		}
+		
+		h1, h2, h2 {
+			font-family: 'Roboto', sans-serif;
+			font-weight: bold;
+		}
+	
+
+		.ped_fonte {
+        font-size: 2.22rem;
+        font-family: 'Roboto', sans-serif;
+        font-weight: bold;
+        color: blue;
+    }
+
+
+		/*controle*/
+		
+		.table_custom td {
+			padding: 10px;
+			font-size: 2.35rem;
+			border-radius: 10px;
+			box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+			font-family: 'Roboto', sans-serif;
+			font-weight: bold;
+
+		}
+
+		img {
+        width: 180px;
+        height: 130px;
+        position: relative;
+        animation-name: logo;
+        animation-duration: 8s;
+        animation-iteration-count: infinite;
+		}
+
+		@keyframes logo {
+			15%  { transform: rotatey(-100deg);}
+			60%  { transform: rotatey(100deg);}
+			80%  { transform: rotatey(200deg);}
+			100% { left:0px; top:0px;}
+		}
+
+		 /* Dispositivos extra small (telefones em modo retrato, com menos de 576px) */
+			  @media (max-width: 575.98px) {
+				.ped_fonte {
+					font-size: 0.80rem;
+					
+					}
+			   }
+			  
+			  /* Dispositivos small (telefones em modo paisagem, com 576px ou mais) */
+			  @media (min-width: 576px) and (max-width: 767.98px) {
+				.ped_fonte {
+					font-size: 0.80rem;
+					
+					}
+			   }
+			  
+			  /* Dispositivos médios (tablets com 768px ou mais) */
+			  @media (min-width: 768px) and (max-width: 991.98px) { 
+				.ped_fonte {
+					font-size: 1.10rem;
+					
+					}
+			  }
+			  
+			  /* Dispositivos large (desktops com 992px ou mais) */
+			  @media (min-width: 992px) and (max-width: 1199.98px) {
+				.ped_fonte {
+					font-size: 2.20rem;
+					
+					}
+			   }
+			  
+			  /* Dispositivos extra large (desktops grandes com 1200px ou mais) */
+			  @media (min-width: 1500px) { 
+				.ped_fonte {
+					font-size: 3.20rem;
+					
+					}
+			  }
+
+			  .text-color-warning {
+				color: rgb(255, 153, 0);
+			  }

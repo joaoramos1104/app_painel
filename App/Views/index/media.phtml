@@ -1,0 +1,36 @@
+
+<div class="container-fluid mt-1">
+    <div class="row m-1">
+        <div class="col-md-4 col-sm-12 m-auto shadow p-3">
+            <div class="shadow bg-light p-3 rounded-3 col text-center">
+                <form action="atualizar_video" method="POST" enctype="multipart/form-data">
+                    <label for="formFile" class="form-label">Atualizar Video, apenas no formato mp4!</label>
+                    <input name="arquivo" value="" data-name="video" class="form-control rounded-pill" type="file" id="formFile">
+                    <button id="enviar" type="submit" class="btn-outline-success rounded-pill mt-3 form-control"><i class="fa fa-check"></i> Enviar</button>
+                    <?php if (isset($_GET['error']) == 'size') { ?>
+                        <div class="row">
+                            <div class="col">
+                                <span class="text text-danger"><b> arquivo enviado é muito grande, envie arquivos de até 24Mb.</b></span>
+                            </div>
+                        </div>
+                    <?php } elseif (isset($_GET['error']) == 'extensao') { ?>
+                        <div class="row">
+                            <div class="col">
+                                <span class="text text-danger"><b>Por favor, envie arquivo com a extensão mp4!</b></span>
+                            </div>
+                        </div>
+                    <?php  } ?>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-8 col-sm-12 m-auto p-3">
+            <div class="text-center text-success">
+                <img src="img/logo.png" alt="Pro" class="mb-3" width="200px" height="150px">
+                <div id="video">
+                       
+                 </div>
+            </div>
+        </div>
+    </div>
+</div>

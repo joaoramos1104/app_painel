@@ -1,0 +1,70 @@
+
+<div class="container">
+  <div class="row p-3 justify-content-center">
+    <form action="inserir_pedido" method="post">
+      <div class="col-12 p-3 text-center">
+        <label for="">Inserir novo pedido</label>
+        <input name="numero_pedido" type="number" class="form-control text-center shadow" placeholder="Novo pedido...">
+      </div>
+      <div class="col-12 text-center m-auto">
+        <button type="submit" class="btn btn-lg btn-primary rounded shadow">Inserir</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="container-fluid mt-2">
+  <div class="row m-3">
+    <div class="col shadow m-1 bg-light">
+      <div class="p-3 mt-2 rounded">
+        <h1 class="text-center text-warning">Em Separação<i class="fa fa-cart-arrow-down"></i></h1>
+      </div>
+      <table id="data-table-basic" class="table_custom text-center text-warning">
+        <thead>
+          <tr>
+            <th>Pedido</th>
+            <th>Separado</th>
+            <th>Excluir</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($this->view->listarPedidoSeparacao as $key => $value) { ?>
+            <tr>
+              <td scope="row"><?php echo $value['numero_pedido'] ?></td>
+              <td>
+                <a href="/mudar_status?numero_pedido=<?php echo $value['id'] ?>&status=2" class="btn btn-success btn-lg shadow-sm rounded" data-toggle="tooltip" data-placement="top" title="Muda para Retirada"><i class="fa fa-check"></i></a>
+              </td>
+              <td>
+                <a href="/excluir?numero_pedido=<?php echo $value['id'] ?>" class="btn btn-danger btn-lg shadow-sm rounded" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="fa fa-trash"></i></a>
+              </td>
+            <?php } ?>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col shadow m-1 bg-light">
+      <div class="p-3 mt-2 rounded">
+        <h1 class="text-center text-success">Aguardando Retirada <i class="fa fa-check-circle"></i></h1>
+      </div>
+      <table id="data-table-basic-2" class="table_custom text-center text-success">
+        <thead>
+          <tr>
+            <th>Pedido</th>
+            <th>Retirado</th>
+            <th>Excluir</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($this->view->dados as $key => $value) { ?>
+            <tr>
+              <td scope="row"><?php echo $value['numero_pedido'] ?></td>
+              <td><a href="/mudar_status?numero_pedido=<?php echo $value['id'] ?>&status=3" name="id" class="btn btn-success btn-lg shadow-sm rounded" data-toggle="tooltip" data-placement="top" title="Muda para Retirada"><i class="fa fa-check"></i></a>
+              </td>
+              <td><a href="/excluir?numero_pedido=<?php echo $value['id'] ?>" class="btn btn-danger btn-lg shadow-sm rounded" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="fa fa-trash"></i></a>
+              </td>
+            <?php } ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
