@@ -23,11 +23,17 @@ CREATE TABLE IF NOT EXISTS `tb_pedido` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-DROP TABLE IF EXISTS `video`;
-CREATE TABLE `video` (
+DROP TABLE IF EXISTS `tb_media`;
+CREATE TABLE `tb_media` (
   `descricao_video` LONGTEXT NOT NULL);
   
-  INSERT INTO video VALUES('video.mp4');
+  INSERT INTO tb_media VALUES('video.mp4');
+
+  DROP TABLE IF EXISTS `tb_logo`;
+CREATE TABLE `tb_logo` (
+  `descricao_video` LONGTEXT NOT NULL);
+  
+  INSERT INTO tb_logo VALUES('logo.png');
 
 ALTER TABLE `tb_pedido` 
 ADD INDEX `FK_STATUS_PEDIDO_idx` (`STATUS` ASC);

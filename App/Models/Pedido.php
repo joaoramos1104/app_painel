@@ -99,7 +99,7 @@ class Pedido extends Model {
 
 	public function atualizarVideo()
 	{
-			$query = " UPDATE video SET descricao_video = :descricao_video";
+			$query = " UPDATE tb_media SET descricao_video = :descricao_video";
 			$stmt = $this->db->prepare($query);
 			$stmt->bindValue(':descricao_video', $this->__get('descricao_video'));
 			$stmt->execute();
@@ -108,10 +108,26 @@ class Pedido extends Model {
 
 	public function listarVideo()
 	{
-		$query = "SELECT * FROM video";
+		$query = "SELECT * FROM tb_media";
 		$stmt = $this->db->query($query);
 		$stmt->execute();
 		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+	}
+
+	public function logo()
+	{
+		$query = "SELECT * FROM tb_logo";
+		$stmt = $this->db->query($query);
+		$stmt->execute();
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+	}
+	public function atualizarlogo()
+	{
+			$query = " UPDATE tb_logo SET logo = :logo";
+			$stmt = $this->db->prepare($query);
+			$stmt->bindValue(':logo', $this->__get('logo'));
+			$stmt->execute();
+			return $this;
 	}
 
 }

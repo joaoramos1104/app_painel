@@ -38,6 +38,18 @@ class Route extends Bootstrap {
 			'action' => 'atualizar_video'
 		);
 
+		$routes['logo'] = array(
+			'route' => '/logo',
+			'controller' => 'indexController',
+			'action' => 'logo'
+		);
+
+		$routes['atualizar_logo'] = array(
+			'route' => '/atualizar_logo',
+			'controller' => 'indexController',
+			'action' => 'atualizar_logo'
+		);
+
 		$routes['listar_pedido_retirada'] = array(
 			'route' => '/listar_pedido_retirada',
 			'controller' => 'indexController',

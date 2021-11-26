@@ -12,7 +12,7 @@ setInterval(function () {
                 itens += '<div>';
 
             })
-            $("#retirando1").empty(itens).append(itens);
+            $("#separacao").empty(itens).append(itens);
         }
     });
 
@@ -30,7 +30,7 @@ setInterval(function () {
                 itens += '<div class="border bg-light shadow rounded-pill mt-1">' + value.numero_pedido + '</div>';
                 itens += '<div>';
             })
-            $("#retirando2").empty(itens).append(itens);
+            $("#retirada").empty(itens).append(itens);
         }
     });
 }, 2000);
@@ -63,6 +63,23 @@ $(document).ready(function () {
                 },90000);
             }
         });
+
+});
+$(document).ready(function () {
+    $.ajax({
+        url: '/logo',
+        success: function (data) {
+            dados = $.parseJSON(data);
+            var logo = "";
+            $.each(dados, function (key, value) {
+                logo += '<img src="img/' + value.logo + '" alt="Pro" class="mb-3" width="200px" height="150px"></img>';
+            })
+            $("#logo, #logo_media").empty(logo).append(logo);
+            setInterval(function () {
+                $("#logo, #logo_media").empty(logo).append(logo);
+            },90000);
+        }
+    });
 
 });
 

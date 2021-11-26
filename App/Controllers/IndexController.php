@@ -6,7 +6,7 @@ namespace App\Controllers;
 use MF\Controller\Action;
 use MF\Model\Container;
 
-	class IndexController extends Action {
+class IndexController extends Action {
 
 
 	//Painel 
@@ -89,6 +89,25 @@ use MF\Model\Container;
 
 	public function atualizar_video()
 	{
+		if ($_FILES['arquivo'] && $_FILES['arquivo']['name'] != '') {
+
+			$size['tamanho'] = 2048 * 2048 * 6; // 24Mb
+			$extensao_arquivo['extensoes'] = array('mp4');
+
+			$ext = strtolower(substr($_FILES['arquivo']['name'],-4));				
+			$new_name = "video" . $ext;
+			$dir = './img/'; 
+			move_uploaded_file($_FILES['arquivo']['tmp_name'], $dir.$new_name);
+
+			$atualizar = Container::getModel('Pedido');
+			$atualizar->__set('arquivo',$new_name);
+			$atualizar->atualizarLogo();
+			header('Location:/media?success=success');
+		
+	
+	} else {
+		header('Location:/media?error=erro');
+	}
 		
 			$target_dir = "video/";
 			$target_file = $target_dir . basename($_FILES["arquivo"]["name"]);
@@ -99,16 +118,12 @@ use MF\Model\Container;
 			if (array_search($extensao, $extensao_arquivo['extensoes']) === false) {
 			echo "Por favor, envie arquivo com a extensão mp4";
 			header('Location:/media?error=extensao ');
-			// $this->view->arquivo = "Por favor, envie arquivo com a extensão mp4";
-			// $this->render('media');
-				exit;
+			exit;
 			}
 
 			if ($size['tamanho'] < $_FILES['arquivo']['size']) {
 			echo "O arquivo enviado é muito grande, envie arquivos de até 24Mb.";
 			header('Location:/media?error=size');
-			// $this->view->arquivo = "O arquivo enviado é muito grande, envie arquivos de até 24Mb.";
-			// $this->render('media');
 				
 			} else {
 			@move_uploaded_file($_FILES["arquivo"]["tmp_name"], $target_file);
@@ -116,9 +131,9 @@ use MF\Model\Container;
 			$atualizar = Container::getModel('Pedido');
 			$atualizar->__set('descricao_video', $_FILES['arquivo']['name']);
 			$atualizar->atualizarVideo();
-			header('Location:/media');
-
+			header('Location:/media?success=success');
 		}
+		header('Location:/media?error=erro');
 
 	}
 
@@ -129,33 +144,39 @@ use MF\Model\Container;
 		$video = json_encode($media);
 		echo $video;
 
-
-		// $this->render('index');
 	}
 
-	public function controle_lista_pedido_retirada()
+	public function logo()
 	{
-		// $dados = Container::getModel('Pedido');
-		// $pedido = $dados->listarPedidoSeparando();
-		// $pedidos = json_encode($pedido);
-		// echo $pedidos;
+		$dados = Container::getModel('Pedido');
+		$media = $dados->logo();
+		$logo = json_encode($media);
+		echo $logo;
 
-
-		// $this->render('index');
 	}
 
-	public function controle_lista_pedido_separando()
+	public function atualizar_logo()
 	{
-		// $dados = Container::getModel('Pedido');
-		// $pedido = $dados->listarPedidoSeparando();
-		// $pedidos = json_encode($pedido);
-		// echo $pedidos;
+		
+		if ($_FILES['logo'] && $_FILES['logo']['name'] != '') {
+				$ext = strtolower(substr($_FILES['logo']['name'],-4));				
+				$new_name = "logo" . $ext;
+				$dir = './img/'; 
+				move_uploaded_file($_FILES['logo']['tmp_name'], $dir.$new_name);
 
-
-		// $this->render('index');
+				$atualizar = Container::getModel('Pedido');
+				$atualizar->__set('logo',$new_name);
+				$atualizar->atualizarLogo();
+				header('Location:/media?message=success');
+			
+		
+		} else {
+			header('Location:/media?message=error');
+		}
+		
 	}
 
-	}
+}
 
 
 ?>

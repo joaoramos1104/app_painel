@@ -2,34 +2,52 @@
 <div class="container-fluid mt-1">
     <div class="row m-1">
         <div class="col-md-4 col-sm-12 m-auto shadow p-3">
-            <div class="shadow bg-light p-3 rounded-3 col text-center">
+            <div class="shadow bg-light p-3 mb-2 rounded-3 col text-center">
                 <form action="atualizar_video" method="POST" enctype="multipart/form-data">
                     <label for="formFile" class="form-label">Atualizar Video, apenas no formato mp4!</label>
                     <input name="arquivo" value="" data-name="video" class="form-control rounded-pill" type="file" id="formFile">
-                    <button id="enviar" type="submit" class="btn-outline-success rounded-pill mt-3 form-control"><i class="fa fa-check"></i> Enviar</button>
-                    <?php if (isset($_GET['error']) == 'size') { ?>
-                        <div class="row">
-                            <div class="col">
-                                <span class="text text-danger"><b> arquivo enviado é muito grande, envie arquivos de até 24Mb.</b></span>
-                            </div>
+                    <button type="submit" class="btn-outline-success rounded-pill mt-3 form-control"><i class="fa fa-check"></i> Enviar</button>
+                    <?php if (isset($_GET['error']) && $_GET['error'] == 'size') { ?>
+                        <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                            <strong>Ocorreu um erro!</strong> arquivo enviado é muito grande, envie arquivos de até 24Mb.
                         </div>
-                    <?php } elseif (isset($_GET['error']) == 'extensao') { ?>
-                        <div class="row">
-                            <div class="col">
-                                <span class="text text-danger"><b>Por favor, envie arquivo com a extensão mp4!</b></span>
-                            </div>
+                    <?php } elseif (isset($_GET['error']) && $_GET['error'] == 'extensao') { ?>
+                        <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                            <strong>Ocorreu um erro!</strong> Por favor, envie arquivo com a extensão mp4.
+                        </div>
+                        <?php } elseif (isset($_GET['success']) && $_GET['success'] == 'success') { ?>
+                        <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                            <strong>Sussesso!</strong> Video atualizado com sussesso.
+                        </div>
+                        <?php } elseif (isset($_GET['error']) && $_GET['error'] == 'erro') { ?>
+                        <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                            <strong>Ocorreu um erro!</strong> Por favor verifique se o arquivo é válido.
+                        </div>
+                    <?php  } ?>
+                </form>
+            </div>
+            <div class="shadow bg-light p-3 rounded-3 col text-center">
+                <form action="atualizar_logo" method="POST" enctype="multipart/form-data">
+                    <label for="logo" class="form-label">Atualizar Logo, apenas no formato png!</label>
+                    <input name="logo" value="" data-name="logo" class="form-control rounded-pill" type="file" id="logo">
+                    <button type="submit" class="btn-outline-success rounded-pill mt-3 form-control"><i class="fa fa-check"></i> Enviar</button>
+                    <?php if (isset($_GET['message']) && $_GET['message'] == 'success') { ?>
+                        <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                            <strong>Sussesso!</strong> Logo atualizado com sussesso.
+                        </div>
+                    <?php } elseif (isset($_GET['message']) && $_GET['message'] == 'error') { ?>
+                        <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                            <strong>Ocorreu um erro!</strong> Por favor verifique se o arquivo é válido.
                         </div>
                     <?php  } ?>
                 </form>
             </div>
         </div>
-
         <div class="col-md-8 col-sm-12 m-auto p-3">
             <div class="text-center text-success">
-                <img src="img/logo.png" alt="Pro" class="mb-3" width="200px" height="150px">
-                <div id="video">
-                       
-                 </div>
+                <div id="logo_media" class="p-1"></div>
+                <div id="video" class="mt-1 p-1"></div>
+                <div class="text-center text-dark mt-1"></div>
             </div>
         </div>
     </div>
