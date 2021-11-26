@@ -15,11 +15,11 @@
 
 <div class="container-fluid mt-2">
   <div class="row m-3">
-    <div class="col shadow m-1 bg-light">
+    <div class="col shadow m-2 p-3 bg-light">
       <div class="p-3 mt-2 rounded">
         <h1 class="text-center text-warning">Em Separação<i class="fa fa-cart-arrow-down"></i></h1>
       </div>
-      <table id="data-table-basic" class="table_custom text-center text-warning">
+      <table id="data-table-separacao" class="table table-hover table_custom text-center text-warning">
         <thead>
           <tr>
             <th>Pedido</th>
@@ -32,7 +32,7 @@
             <tr>
               <td scope="row"><?php echo $value['numero_pedido'] ?></td>
               <td>
-                <a href="/mudar_status?numero_pedido=<?php echo $value['id'] ?>&status=2" class="btn btn-success btn-lg shadow-sm rounded" data-toggle="tooltip" data-placement="top" title="Muda para Retirada"><i class="fa fa-check"></i></a>
+                <a href="/mudar_status?numero_pedido=<?php echo $value['id'] ?>&status=2" class="btn btn-outline-secondary btn-lg shadow-sm rounded" data-toggle="tooltip" data-placement="top" title="Muda para Retirada"><i class="fa fa-check"></i></a>
               </td>
               <td>
                 <a href="/excluir?numero_pedido=<?php echo $value['id'] ?>" class="btn btn-danger btn-lg shadow-sm rounded" data-toggle="tooltip" data-placement="top" title="Excluir"><i class="fa fa-trash"></i></a>
@@ -42,11 +42,11 @@
       </table>
     </div>
 
-    <div class="col shadow m-1 bg-light">
+    <div class="col shadow m-2 p-3 bg-light">
       <div class="p-3 mt-2 rounded">
         <h1 class="text-center text-success">Aguardando Retirada <i class="fa fa-check-circle"></i></h1>
       </div>
-      <table id="data-table-basic-2" class="table_custom text-center text-success">
+      <table id="data-table-retirada" class="table table-hover table_custom text-center text-success">
         <thead>
           <tr>
             <th>Pedido</th>

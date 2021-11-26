@@ -2,7 +2,7 @@
  "use strict";
 	
 	$(document).ready(function () {
-		$('#data-table-basic').DataTable({
+		$('#data-table-separacao').DataTable({
 			"language": {
 				"lengthMenu": "Exibir _MENU_ Por Página",
 				"zeroRecords": "Nothing found - sorry",
@@ -15,17 +15,17 @@
 			
 			
 		});
-		var table = $('.data-table').DataTable();
+		// var table = $('.data-table').DataTable();
 
-		table
-			.column('0:visible')
-			.order('desc')
-			.draw();
+		// table
+		// 	.column('0:visible')
+		// 	.order('desc')
+		// 	.draw();
 			
 	 });
 
 	$(document).ready(function () {
-		$('#data-table-basic-2').DataTable({
+		$('#data-table-retirada').DataTable({
 			"language": {
 				"lengthMenu": "Exibir _MENU_ Por Página",
 				"zeroRecords": "Nothing found - sorry",
@@ -33,18 +33,10 @@
 				"infoEmpty": "No records available",
 				"infoFiltered": "(filtered from _MAX_ total records)",
 				"sSearchPlaceholder": "Buscar..."
-
+				
 			}
 
-
 		});
-		var table = $('.data-table').DataTable();
-
-		table
-			.column('0:visible')
-			.order('desc')
-			.draw();
-
 	});
 
  
