@@ -92,49 +92,32 @@ class IndexController extends Action {
 		if ($_FILES['arquivo'] && $_FILES['arquivo']['name'] != '') {
 
 			$size['tamanho'] = 2048 * 2048 * 6; // 24Mb
-			$extensao_arquivo['extensoes'] = array('mp4');
+			$extensao_arquivo['extensao'] = array('mp4');
 
 			$ext = strtolower(substr($_FILES['arquivo']['name'],-4));				
 			$new_name = "video" . $ext;
-			$dir = './img/'; 
+			$dir = './video/'; 
+
+
+			if (array_search($ext, $extensao_arquivo['extensao']) === false) {
+				header('Location:/media?error=extensao ');
+			}
+
+			if ($_FILES['arquivo']['size'] > $size['tamanho']) {
+				header('Location:/media?error=size');
+			}
+
 			move_uploaded_file($_FILES['arquivo']['tmp_name'], $dir.$new_name);
 
 			$atualizar = Container::getModel('Pedido');
-			$atualizar->__set('arquivo',$new_name);
-			$atualizar->atualizarLogo();
-			header('Location:/media?success=success');
-		
-	
-	} else {
-		header('Location:/media?error=erro');
-	}
-		
-			$target_dir = "video/";
-			$target_file = $target_dir . basename($_FILES["arquivo"]["name"]);
-			$size['tamanho'] = 2048 * 2048 * 6; // 24Mb
-			$extensao_arquivo['extensoes'] = array('mp4');
-
-			$extensao = strtolower(end(explode('.', $_FILES['arquivo']['name'])));
-			if (array_search($extensao, $extensao_arquivo['extensoes']) === false) {
-			echo "Por favor, envie arquivo com a extensão mp4";
-			header('Location:/media?error=extensao ');
-			exit;
-			}
-
-			if ($size['tamanho'] < $_FILES['arquivo']['size']) {
-			echo "O arquivo enviado é muito grande, envie arquivos de até 24Mb.";
-			header('Location:/media?error=size');
-				
-			} else {
-			@move_uploaded_file($_FILES["arquivo"]["tmp_name"], $target_file);
-
-			$atualizar = Container::getModel('Pedido');
-			$atualizar->__set('descricao_video', $_FILES['arquivo']['name']);
+			$atualizar->__set('descricao_video',$new_name);
 			$atualizar->atualizarVideo();
 			header('Location:/media?success=success');
+		
+		
+		} else {
+			header('Location:/media?error=erro');
 		}
-		header('Location:/media?error=erro');
-
 	}
 
 	public function listar_video()

@@ -31,7 +31,7 @@ CREATE TABLE `tb_media` (
 
   DROP TABLE IF EXISTS `tb_logo`;
 CREATE TABLE `tb_logo` (
-  `descricao_video` LONGTEXT NOT NULL);
+  `logo` LONGTEXT NOT NULL);
   
   INSERT INTO tb_logo VALUES('logo.png');
 
