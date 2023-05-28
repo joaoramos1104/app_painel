@@ -80,6 +80,13 @@ class Route extends Bootstrap {
 			'action' => 'mudar_status'
 		);
 
+		$routes['retirar_pedido'] = array(
+			'route' => '/retirar_pedido',
+			'controller' => 'indexController',
+			'action' => 'retirar_pedido'
+		);
+
+
 		$routes['excluir'] = array(
 			'route' => '/excluir',
 			'controller' => 'indexController',

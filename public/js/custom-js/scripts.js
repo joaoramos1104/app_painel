@@ -1,3 +1,95 @@
+// notification
+function notification (title, message, template){
+    function notify(from, align, icon, type, animIn, animOut){
+        $.growl({
+            title: title,
+            message: message,
+        },{
+            element: 'body',
+            type: type,
+            allow_dismiss: true,
+            placement: {
+                from: "top",
+                align: "right"
+            },
+            offset: {
+                x: 20,
+                y: 85
+            },
+            spacing: 10,
+            z_index: 2031,
+            delay: 2500,
+            timer: 5000,
+            url_target: '_blank',
+            mouse_over: false,
+            animate: {
+                enter: animIn,
+                exit: animOut
+            },
+            icon_type: 'class',
+            template: template
+        });
+
+    };
+
+    $( function(){
+        var nFrom = $(this).attr('data-from');
+        var nAlign = $(this).attr('data-align');
+        var nIcons = $(this).attr('data-icon');
+        var nType = $(this).attr('data-type');
+        var nAnimIn = $(this).attr('data-animation-in');
+        var nAnimOut = $(this).attr('data-animation-out');
+
+        notify(nFrom, nAlign, nIcons, nType, nAnimIn, nAnimOut);
+    });
+}
+
+
+// Novo Pedido
+$('#novo-pedido').submit(function (e) {
+    e.preventDefault()
+    url = $(this).attr("action")
+    $.ajax({
+        data: $(this).serialize(),
+        url: url,
+        type: 'post',
+        dataType: 'json',
+
+        success: function (response) {
+            console.log('response')
+            $('[data-name="form-novo-pedido"]').val('');
+
+
+            title = ' <i class="bi bi-check2-square"></i> '
+            message = 'Novo Pedido inserido, em separação!'
+            template =
+                '<div class="alert alert-info bg-info" role="alert">' +
+                '<strong data-growl="title"></strong> <span data-growl="message"></span>' +
+                '</div>'
+
+                notification(title, message, template)
+
+                // $('#modal').load(' #modal');
+            $("#pedidosSeparacao").load( "/controle #pedidosSeparacao");
+            
+        },
+
+        error: function (response) {
+            console.log('erro')
+            title = ' <i class="bi bi-exclamation-circle"> </i> '
+            message = response.responseJSON.message
+            template =
+                '<div class="alert alert-danger bg-danger" role="alert">' +
+                '<strong data-growl="title"></strong> <span data-growl="message"></span>' +
+                '</div>'
+
+            notification(title, message, template)
+
+        }
+    })
+})
+
+
 // painel index
 setInterval(function () {
     $.ajax({
@@ -16,9 +108,6 @@ setInterval(function () {
         }
     });
 
-}, 2000);
-
-setInterval(function () {
     $.ajax({
         url: '/listar_pedido_retirada',
         type: "POST",
@@ -33,10 +122,11 @@ setInterval(function () {
             $("#retirada").empty(itens).append(itens);
         }
     });
-}, 2000);
+
+}, 3000);
 
 
-//Audio
+// Audio
 
 // setInterval(function () {
 //     var audio = document.getElementById('audio')

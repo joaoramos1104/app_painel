@@ -63,18 +63,38 @@ class IndexController extends Action {
 			$inserir = Container::getModel('Pedido');
 			$inserir->__set('numero_pedido', $_POST['numero_pedido']);
 			$inserir->inserir_pedido();
-			header('Location:/controle ');
+			$item = json_encode($inserir);
+			echo $item;
+			// return $this;
+
+			// header('Location:/controle ');
 		}
 
 
 	public function mudar_status()
 	{
 		$status = Container::getModel('Pedido');
-		$status->__set('numero_pedido', $_GET['numero_pedido']);
-		$status->__set('status', $_GET['status']);
+		$status->__set('id', $_POST['id_pedido']);
+		$status->__set('status', $_POST['status']);
 		$status->mudarStatus();
+
+		$item = json_encode($status);
+		echo $item;
+		// header('Location:/controle ');
+	}
+
+	public function retirar_pedido()
+	{
+		$status = Container::getModel('Pedido');
+		$status->__set('id', $_POST['id_pedido']);
+		$status->__set('status', $_POST['status']);
+		$status->__set('user_liberacao', $_POST['user']);
+		$status->__set('nome_responsavel', $_POST['nome_responsavel']);
+		$status->__set('telefone', $_POST['telefone']);
+		$status->__set('placa_veiculo', $_POST['placa_veiculo']);
+		$status->__set('tipo_veiculo', $_POST['tipo_veiculo']);
+		$status->retirarPedido();
 		header('Location:/controle ');
-		// print_r($_GET);
 	}
 
 	public function excluir()
@@ -83,7 +103,6 @@ class IndexController extends Action {
 		$excluir->__set('numero_pedido', $_GET['numero_pedido']);
 		$excluir->excluir();
 		header('Location:/controle ');
-		// print_r($_GET);
 	}
 
 	public function atualizar_video()

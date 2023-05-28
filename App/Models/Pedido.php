@@ -77,10 +77,32 @@ class Pedido extends Model {
 	public function mudarStatus()
 	{
 
-		$query = " UPDATE tb_pedido SET status = :status WHERE id = :numero_pedido ";
+		$query = " UPDATE tb_pedido SET status = :status WHERE id = :id ";
 		$stmt = $this->db->prepare($query);
-		$stmt->bindValue(':numero_pedido', $this->__get('numero_pedido'));
+		$stmt->bindValue(':id', $this->__get('id'));
 		$stmt->bindValue(':status', $this->__get('status'));
+		$stmt->execute();
+		return $this;
+	}
+
+
+	public function retirarPedido()
+	{
+
+		$query = "	UPDATE tb_pedido SET status = :status WHERE id = :id;
+					INSERT INTO tb_pedido_retirado (id_pedido, user_liberacao, placa_veiculo, tipo_veiculo, responsavel_veiculo, telefone, data_retirada)
+					VALUES (:id, :user_liberacao, :placa_veiculo, :tipo_veiculo, :responsavel_veiculo, :telefone, CURRENT_TIMESTAMP());";
+
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':id', $this->__get('id'));
+		$stmt->bindValue(':status', $this->__get('status'));
+
+		$stmt->bindValue(':id', $this->__get('id'));
+		$stmt->bindValue(':user_liberacao', $this->__get('user_liberacao'));
+		$stmt->bindValue(':placa_veiculo', $this->__get('placa_veiculo'));
+		$stmt->bindValue(':tipo_veiculo', $this->__get('tipo_veiculo'));
+		$stmt->bindValue(':responsavel_veiculo', $this->__get('nome_responsavel'));
+		$stmt->bindValue(':telefone', $this->__get('telefone'));
 		$stmt->execute();
 		return $this;
 	}
@@ -98,11 +120,11 @@ class Pedido extends Model {
 
 	public function atualizarVideo()
 	{
-			$query = " UPDATE tb_media SET descricao_video = :descricao_video";
-			$stmt = $this->db->prepare($query);
-			$stmt->bindValue(':descricao_video', $this->__get('descricao_video'));
-			$stmt->execute();
-			return $this;
+		$query = " UPDATE tb_media SET descricao_video = :descricao_video";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':descricao_video', $this->__get('descricao_video'));
+		$stmt->execute();
+		return $this;
 	}
 
 	public function listarVideo()
@@ -122,11 +144,11 @@ class Pedido extends Model {
 	}
 	public function atualizarlogo()
 	{
-			$query = " UPDATE tb_logo SET logo = :logo";
-			$stmt = $this->db->prepare($query);
-			$stmt->bindValue(':logo', $this->__get('logo'));
-			$stmt->execute();
-			return $this;
+		$query = " UPDATE tb_logo SET logo = :logo";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':logo', $this->__get('logo'));
+		$stmt->execute();
+		return $this;
 	}
 
 }
