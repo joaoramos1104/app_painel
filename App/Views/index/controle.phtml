@@ -1,4 +1,3 @@
-<script src="/js/jquery-3.6.0.min.js"></script>
 <div class="container">
     <div class="row p-3 mt-2">
         
@@ -13,8 +12,11 @@
                 </div>
             </form>
         </div>
-        <div class="col-6 text-center m-auto">
-            <button type="button" class="btn btn-success rounded shadow">Ver pedidos Finalizados e cancelados <i class="bi bi-cart"></i></button>
+        <div class="col-md-3 text-center mt-2">
+            <button type="button" class="btn btn-success rounded shadow" data-bs-toggle="modal" data-bs-target="#pedidos_finalizados">Pedidos Finalizado <i class="bi bi-cart-check"></i></button>
+        </div>
+        <div class="col-md-3 text-center mt-2">
+            <button type="button" class="btn btn-danger rounded shadow" data-bs-toggle="modal" data-bs-target="#pedidos_cancelados">Pedidos Cancelados <i class="bi bi-cart"></i></button>
         </div>
     </div>
 </div>
@@ -33,16 +35,17 @@
                     <button class=" btn btn-sm float-end" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
                     <ul class="dropdown-menu shadow" aria-labelledby="navbarDropdown">
                         <li>
-                            <!-- <form id="ped-separado<?php echo $value['id'] ?>" action="/mudar_status" method="get">
-                                <input type="hidden" name="id_pedido" value="<?php echo $value['id'] ?>">
-                                <input type="hidden" name="status" value="2">
-                            <button class="dropdown-item" type="submit">Separado <i class="bi bi-cart-check float-end text-success"></i></button>
-                            </form> -->
                             <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#marcar-pedido-separado<?php echo $value['id'] ?>">Separado <i class="bi bi-cart-check float-end text-success"></i></a>
-                            <!-- <a class="dropdown-item" href="/mudar_status?id_pedido=<?php echo $value['id'] ?>&status=2">Separado <i class="bi bi-cart-check float-end text-success"></i></a> -->
                         </li>
                         <li>
-                            <a class="dropdown-item" href="/mudar_status?id_pedido=<?php echo $value['id'] ?>&status=4">Cancelar <i class="bi bi-cart-x float-end"></i></a></li>
+                            <button class="dropdown-item" id="button-delete-photo"
+                                onclick="event.preventDefault();
+                                document.getElementById('mudar_status<?php echo $value['id'] ?>').submit();">Cancelar <i class="text-danger bi bi-cart-x float-end"></i>
+                            </button>
+                            <form id="mudar_status<?php echo $value['id'] ?>" action="/mudar_status" method="POST" class="d-none">
+                                <input name="id_pedido" type="hidden" value="<?php echo $value['id'] ?>">    
+                                <input name="status" type="hidden" value="4">    
+                            </form>
                         <li>
                             <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#excluir-pedido<?php echo $value['id'] ?>">Excluir <i class="bi bi-trash float-end text-danger"></i></a>
                         </li>
@@ -71,8 +74,14 @@
                                                 <hr>
                                                 <div class="col">
                                                     <div class="col float-end">
+                                                        <button class="btn btn-sm text-white"
+                                                        onclick="event.preventDefault();
+                                                                document.getElementById('deletar_pedido<?php echo $value['id'] ?>').submit();">Sim <i class="bi bi-check"></i>
+                                                        </button>
+                                                        <form id="deletar_pedido<?php echo $value['id'] ?>" action="/excluir" method="POST" class="d-none">
+                                                            <input name="numero_pedido" type="hidden" value="<?php echo $value['id'] ?>">       
+                                                        </form>
                                                         <button type="button" class="btn btn-sm text-white" data-bs-dismiss="modal">Cancelar <i class="bi bi-x"></i></button>
-                                                        <a href="/excluir?numero_pedido=<?php echo $value['id'] ?>" class="btn btn-sm text-white" data-toggle="tooltip" data-placement="top" title="Excluir">Sim <i class="bi bi-check"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -98,8 +107,15 @@
                     <h5 class="text-success float-start"><?php echo $value['numero_pedido'] ?></h5>
                     <button class="btn btn-sm float-end" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-three-dots-vertical"></i></button>
                     <ul class="dropdown-menu shadow" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#retirar-pedido<?php echo $value['id'] ?>">Concluír | Retirar <i class="bi bi-check float-end text-success"></i></a></li>
-                        <li><a class="dropdown-item" href="/mudar_status?id_pedido=<?php echo $value['id'] ?>&status=4">Cancelar <i class="bi bi-cart-x float-end"></i></a></li>
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#retirar-pedido<?php echo $value['id'] ?>">Finalizar <i class="bi bi-cart-check float-end text-success"></i></a></li>
+                        <li><button class="dropdown-item"
+                                onclick="event.preventDefault();
+                                document.getElementById('cancelar_pedido<?php echo $value['id'] ?>').submit();">Cancelar <i class="text-danger bi bi-cart-x float-end"></i>
+                            </button>
+                            <form id="cancelar_pedido<?php echo $value['id'] ?>" action="/mudar_status" method="POST" class="d-none">
+                                <input name="id_pedido" type="hidden" value="<?php echo $value['id'] ?>">    
+                                <input name="status" type="hidden" value="4">    
+                            </form></li>
                         <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#excluir-retirada<?php echo $value['id'] ?>">Excluir <i class="bi bi-trash float-end text-danger"></i></a></li>
                     </ul>
                     </div>
@@ -125,8 +141,14 @@
                                                 <hr>
                                                 <div class="col">
                                                     <div class="col float-end">
-                                                        <button type="button" class="btn btn-sm text-white" data-bs-dismiss="modal">Cancelar <i class="bi bi-x"></i></button>
-                                                        <a href="/excluir?numero_pedido=<?php echo $value['id'] ?>" class="btn btn-sm text-white" data-toggle="tooltip" data-placement="top" title="Excluir">Sim <i class="bi bi-check"></i></a>
+                                                    <button class="btn btn-sm text-white"
+                                                    onclick="event.preventDefault();
+                                                            document.getElementById('deletar_pedido<?php echo $value['id'] ?>').submit();">Sim <i class="bi bi-check"></i>
+                                                    </button>
+                                                    <form id="deletar_pedido<?php echo $value['id'] ?>" action="/excluir" method="POST" class="d-none">
+                                                        <input name="numero_pedido" type="hidden" value="<?php echo $value['id'] ?>">       
+                                                    </form>
+                                                     <button type="button" class="btn btn-sm text-white" data-bs-dismiss="modal">Cancelar <i class="bi bi-x"></i></button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -159,22 +181,22 @@
                                                     <div class="form-group">
                                                         <label>Nome do Responsável </label>
                                                         <input type="text" class="form-control" name="nome_responsavel">
-                                                        <input type="hidden" class="form-control" name="id_pedido" value="<?php echo $value['id'] ?>">
-                                                        <input type="hidden" class="form-control" name="status" value="3">
-                                                        <input type="hidden" class="form-control" name="user" value="Pedro Silva">
+                                                        <input type="hidden" class="form-control" name="id_pedido" value="<?php echo $value['id'] ?>" required>
+                                                        <input type="hidden" class="form-control" name="status" value="3" required>
+                                                        <input type="hidden" class="form-control" name="user" value="Pedro Silva" required>
                                                         </div>
                                                         <div class="form-group mt-1">
                                                         <label>Telefone</label>
-                                                        <input type="text" class="form-control" name="telefone" placeholder="(21) 99999-9999">
+                                                        <input type="text" class="form-control" name="telefone" placeholder="(21) 99999-9999" onkeypress="mask(this, mphone);" onblur="mask(this, mphone);" required>
                                                     </div>
 
                                                     <div class="form-group mt-1">
                                                         <label>Placa do Veículo</label>
-                                                        <input type="text" class="form-control" name="placa_veiculo" placeholder="RIO1234">
+                                                        <input type="text" class="form-control" name="placa_veiculo" placeholder="RIO1234" required>
                                                     </div>
                                                     <div class="form-group mt-1">
                                                         <label>Tipo Veículo</label>
-                                                        <input type="text" class="form-control" name="tipo_veiculo" placeholder="Moto, Carro ou Outros">
+                                                        <input type="text" class="form-control" name="tipo_veiculo" placeholder="Moto, Carro ou Outros" required>
                                                     </div>
                                                     <hr>
                                                     <div class="col">
@@ -200,7 +222,7 @@
 
 
 <?php foreach ($this->view->listarPedidoSeparacao as $key => $value) { ?>
-    <div id="modal">
+<div id="modal">
     <!-- Modal marcar-pedido-separado -->
     <div class="modal fade" id="marcar-pedido-separado<?php echo $value['id'] ?>" data-bs-backdrop="static" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -238,55 +260,138 @@
             </div>
         </div>
     </div>
-    <script>
-    $('#button-mod').click(function () {
-        $("#ped-separado<?php echo $value['id'] ?>").submit(function (e) {
-            e.preventDefault()
-            url = $(this).attr("action")
-            $.ajax({
-                data: $(this).serialize(),
-                url: url,
-                type: "POST",
-                dataType: 'json',
-
-                success: function (response) {
-                    console.log(response)
-                    title = ' <i class="bi bi-check2-square"></i> '
-                    message = 'Pedido aguardando Retirada!'
-                    template =
-                        '<div class="alert alert-info bg-info" role="alert">' +
-                        '<strong data-growl="title"></strong> <span data-growl="message"></span>' +
-                        '</div>'
-
-                        notification(title, message, template)
-                    
-                    // $("#container").load( " #container");
-                    // $('.modal').load(' .modal');
-                    $('.modal').modal('hide');
-                    $("#pedidosSeparacao").load( " #pedidosSeparacao");
-                    $("#pedidosRetirada").load( " #pedidosRetirada");
-
-                    
-                },
-
-                error: function (response) {
-                    title = ' <i class="bi bi-exclamation-circle"> </i> '
-                    message = response.responseJSON.message
-                    template =
-                        '<div class="alert alert-danger bg-danger" role="alert">' +
-                        '<strong data-growl="title"></strong> <span data-growl="message"></span>' +
-                        '</div>'
-
-                    notification(title, message, template)
-
-                }
-            })
-        })
-    })
-    </script>
-    </div>
+</div>
     <form id="ped-separado<?php echo $value['id'] ?>" action="/mudar_status" method="post">
         <input type="hidden" name="id_pedido" value="<?php echo $value['id'] ?>">
         <input type="hidden" name="status" value="2">
     </form>
-<?php } ?> 
+<?php } ?>
+
+
+<!-- Modal Pedidos Finalizados -->
+<div class="modal fade" id="pedidos_finalizados" data-bs-backdrop="static" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content bg-transparent border-0">
+            <div class="container-fluid bg-white text-dark shadow">
+                <div class="modal-body p-1">
+                    <div class="row p-1">
+                        <div class="col-12 col-sm-12 p-3 m-auto">
+                            <div class="row p-3 m-auto">
+                                <div class=" col p-3 small mb-3">
+                                    <h5 class="text-center">Pedidos Finalizados <i class="bi bi-cart-check text-success"></i></h5>
+                                    <div class="row g-3 mt-2">
+                                        <div class="col-12 text-center">
+                                        <table id="peds_finalizados" class="p-1 table table-responsive table-hover small" style="width:100%">
+                                            <thead>
+                                                <tr class="bg-success text-white">
+                                                    <th>Numero Pedido</th>
+                                                    <th>Liberado por</th>
+                                                    <th>Retirado Por</th>
+                                                    <th>Telefone</th>
+                                                    <th>Tipo do Veiculo</th>
+                                                    <th>Placa</th>
+                                                    <th>Data da Retirada</th>
+                                                    <!-- <th>Ação</th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody class="font-color-darkgrey">
+                                            <?php foreach ($this->view->peds_finalizados as $key => $value) { ?>
+                                                <tr>
+                                                    <td><?php echo $value['numero_pedido'] ?></td>
+                                                    <td><?php echo $value['user_liberacao'] ?></td>
+                                                    <td><?php echo $value['responsavel_veiculo'] ?></td>
+                                                    <td><?php echo $value['telefone'] ?></td>
+                                                    <td><?php echo $value['tipo_veiculo'] ?></td>
+                                                    <td><?php echo $value['placa_veiculo'] ?></td>
+                                                    <td><?php echo $value['data_retirada'] ?></td>
+                                                </tr>
+                                            <?php } ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr class="bg-success text-white">
+                                                    <th>Numero Pedido</th>
+                                                    <th>Liberado por</th>
+                                                    <th>Retirado Por</th>
+                                                    <th>Telefone</th>
+                                                    <th>Tipo do Veiculo</th>
+                                                    <th>Placa</th>
+                                                    <th>Data da Retirada</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="col">
+                                    <div class="col float-end">
+                                        <button type="button" class="btn btn-sm text-dark" data-bs-dismiss="modal">Voltar <i class="bi bi-x"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Pedidos Cancelados -->
+<div class="modal fade" id="pedidos_cancelados" data-bs-backdrop="static" data-bs-backdrop="false" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content bg-transparent border-0">
+            <div class="container-fluid bg-white text-dark shadow">
+                <div class="modal-body p-1">
+                    <div class="row p-1">
+                        <div class="col-12 col-sm-12 p-3 m-auto">
+                            <div class="row p-3 m-auto">
+                                <div class=" col p-3 small mb-3">
+                                    <h5 class="text-center">Pedidos Cancelados <i class="bi bi-cart"></i></h5>
+                                    <div class="row g-3 mt-2">
+                                        <div class="col-12 text-center">
+                                        <table id="peds_cancelados" class="p-1 table table-responsive table-hover small" style="width:100%">
+                                        <thead>
+                                                <tr class="bg-danger text-white">
+                                                    <th>Numero Pedido</th>
+                                                    <th>Status</th>
+                                                    <th>Data da Inclusão</th>
+                                                    <th>Data do Cancelamento</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="font-color-darkgrey">
+                                            <?php foreach ($this->view->peds_cancelados as $key => $value) { ?>
+                                                <tr>
+                                                    <td><?php echo $value['numero_pedido'] ?></td>
+                                                    <td><?php echo $value['descricao'] ?></td>
+                                                    <td><?php echo $value['data_inclusao'] ?></td>
+                                                    <td><?php echo $value['data_atualizacao'] ?></td>
+                                                </tr>
+                                            <?php } ?>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr class="bg-danger text-white">
+                                                    <th>Numero Pedido</th>
+                                                    <th>Status</th>
+                                                    <th>Data da Inclusão</th>
+                                                    <th>Data do Cancelamento</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="col">
+                                    <div class="col float-end">
+                                        <button type="button" class="btn btn-sm text-dark" data-bs-dismiss="modal">Voltar <i class="bi bi-x"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

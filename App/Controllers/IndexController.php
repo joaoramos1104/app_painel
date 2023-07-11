@@ -55,6 +55,8 @@ class IndexController extends Action {
 			$pedido = $dados->listarPedidoRetiradaControle();
 			$this->view->dados = $pedido;
 			$this->view->listarPedidoSeparacao = $dados->listarPedidoSeparandoControle();
+			$this->view->peds_finalizados = $dados->pedidosFinalizados();
+			$this->view->peds_cancelados = $dados->pedidosCancelados();
 			$this->render('controle');
 		}
 
@@ -65,8 +67,6 @@ class IndexController extends Action {
 			$inserir->inserir_pedido();
 			$item = json_encode($inserir);
 			echo $item;
-			// return $this;
-
 			// header('Location:/controle ');
 		}
 
@@ -77,10 +77,9 @@ class IndexController extends Action {
 		$status->__set('id', $_POST['id_pedido']);
 		$status->__set('status', $_POST['status']);
 		$status->mudarStatus();
-
-		$item = json_encode($status);
-		echo $item;
-		// header('Location:/controle ');
+		// $item = json_encode($status);
+		// echo $item;
+		header('Location:/controle ');
 	}
 
 	public function retirar_pedido()
@@ -100,7 +99,7 @@ class IndexController extends Action {
 	public function excluir()
 	{
 		$excluir = Container::getModel('Pedido');
-		$excluir->__set('numero_pedido', $_GET['numero_pedido']);
+		$excluir->__set('numero_pedido', $_POST['numero_pedido']);
 		$excluir->excluir();
 		header('Location:/controle ');
 	}

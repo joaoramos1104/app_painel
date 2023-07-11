@@ -64,6 +64,38 @@ class Pedido extends Model {
 		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 	}
 
+	public function pedidosFinalizados()
+	{
+
+		$query = "SELECT p.id, p.numero_pedido, p.status, r.responsavel_veiculo, r.tipo_veiculo, r.placa_veiculo, r.telefone, r.user_liberacao, r.data_retirada 
+		FROM tb_pedido AS p
+		INNER JOIN tb_pedido_retirado AS r ON (r.id_pedido = p.id)
+		WHERE p.status = 3
+        ORDER BY r.data_retirada desc";
+
+		$stmt = $this->db->query($query);
+		$stmt->execute();
+
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+	}
+
+	public function pedidosCancelados()
+	{
+
+		$query = "SELECT p.id, p.numero_pedido, s.descricao, p.data_inclusao, p.data_atualizacao
+		FROM tb_pedido AS p
+		INNER JOIN tb_status AS s ON (p.status = s.id)
+		WHERE p.status = 4
+        ORDER BY p.data_atualizacao desc";
+
+		$stmt = $this->db->query($query);
+		$stmt->execute();
+
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+	}
+
+	
+
 	public function inserir_pedido()
 	{
 
@@ -77,7 +109,7 @@ class Pedido extends Model {
 	public function mudarStatus()
 	{
 
-		$query = " UPDATE tb_pedido SET status = :status WHERE id = :id ";
+		$query = " UPDATE tb_pedido SET status = :status, data_atualizacao = current_timestamp() WHERE id = :id ";
 		$stmt = $this->db->prepare($query);
 		$stmt->bindValue(':id', $this->__get('id'));
 		$stmt->bindValue(':status', $this->__get('status'));
